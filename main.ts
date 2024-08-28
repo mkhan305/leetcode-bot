@@ -221,19 +221,21 @@ client.on(Events.MessageCreate, async (message: any) => {
       const orderedMembers = Object.keys(members).sort(
         (a, b) => data[a].profile.ranking - data[b].profile.ranking,
       );
-      for (let i = 0; i < orderedMembers.length; i++) {
-        let prefix;
-        if (i == 0) {
-          prefix = "🥇";
-        } else if (i == 1) {
-          prefix = "🥈";
-        } else if (i == 2) {
-          prefix = "🥉";
-        } else {
-          prefix = "  " + (i + 1);
-        }
+      const prefixEmojis = [
+        "🥇",
+        "🥈",
+        "🥉",
+        "4️⃣",
+        "5️⃣",
+        "6️⃣",
+        "7️⃣",
+        "8️⃣",
+        "9️⃣",
+        "🔟",
+      ];
+      for (let i = 0; i < Math.min(orderedMembers.length, 10); i++) {
         const member = orderedMembers[i];
-        leaderboard += `${prefix}. ${sanitizeDiscordInput(member)}\n`;
+        leaderboard += `${prefixEmojis[i]} ${sanitizeDiscordInput(member)}\n`;
       }
 
       const embed = new EmbedBuilder()
